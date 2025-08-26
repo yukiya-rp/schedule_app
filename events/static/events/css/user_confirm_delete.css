@@ -1,0 +1,226 @@
+/* 基本スタイル */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* ヘッダー */
+.confirm-header {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.confirm-header h1 {
+    margin: 0;
+    font-size: 2em;
+    font-weight: 300;
+}
+
+/* 確認コンテンツ */
+.confirm-content {
+    padding: 40px;
+    text-align: center;
+}
+
+.warning-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+.confirm-message {
+    margin-bottom: 30px;
+}
+
+.confirm-message h2 {
+    color: #dc3545;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.confirm-message p {
+    color: #666;
+    font-size: 1.1em;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ユーザープレビュー */
+.user-preview {
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.jersey-display {
+    flex-shrink: 0;
+}
+
+.jersey-number {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.user-info {
+    text-align: left;
+}
+
+.user-name {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.user-details {
+    color: #666;
+    font-size: 1em;
+}
+
+.user-details span {
+    margin-right: 15px;
+}
+
+/* 確認アクション */
+.confirm-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* ボタンスタイル */
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    min-width: 120px;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .container {
+        margin: 0 10px;
+        border-radius: 10px;
+    }
+    
+    .confirm-header {
+        padding: 20px;
+    }
+    
+    .confirm-header h1 {
+        font-size: 1.6em;
+    }
+    
+    .confirm-content {
+        padding: 20px;
+    }
+    
+    .warning-icon {
+        font-size: 3em;
+    }
+    
+    .confirm-message h2 {
+        font-size: 1.3em;
+    }
+    
+    .user-preview {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .user-info {
+        text-align: center;
+    }
+    
+    .user-details span {
+        display: block;
+        margin: 5px 0;
+    }
+    
+    .jersey-number {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5em;
+    }
+    
+    .confirm-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .confirm-content {
+        padding: 15px;
+    }
+    
+    .user-preview {
+        padding: 15px;
+    }
+    
+    .confirm-message p {
+        font-size: 1em;
+    }
+}

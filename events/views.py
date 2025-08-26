@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Event
-from .forms import EventForm
+from .models import Event, User
+from .forms import EventForm, UserForm
 
 def event_list(request):
     events = Event.objects.all().order_by('start_time')
@@ -64,3 +64,48 @@ def event_delete(request, event_id):
     except Event.DoesNotExist:
         messages.error(request, '指定されたイベントが見つかりません。')
         return redirect('event_list')
+
+# ユーザー機能のビュー
+
+def user_list(request):
+    users = User.objects.all()
+    return render(request, 'events/user_list.html', {'users': users})
+
+def user_create(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'ユーザーが正常に登録されました。')
+            return redirect('user_list')
+    else:
+        form = UserForm()
+    
+    return render(request, 'events/user_create.html', {'form': form})
+
+def user_detail(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    return render(request, 'events/user_detail.html', {'user': user})
+
+def user_edit(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'ユーザー「{user.name}」の情報が更新されました。')
+            return redirect('user_detail', user_id=user.id)
+    else:
+        form = UserForm(instance=user)
+    
+    return render(request, 'events/user_edit.html', {'form': form, 'user': user})
+
+def user_delete(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        user_name = user.name
+        user.delete()
+        messages.success(request, f'ユーザー「{user_name}」が削除されました。')
+        return redirect('user_list')
+    else:
+        return render(request, 'events/user_confirm_delete.html', {'user': user})
