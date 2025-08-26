@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="ja">
+    <meta name="language" content="ja">
+    <meta name="google" content="notranslate">
+    <title>{{ user.name }} - ユーザー詳細</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/css/user_detail.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>{{ user.name }}</h1>
+                <div class="user-jersey-number">#{{ user.jersey_number }}</div>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'user_edit' user.id %}" class="btn btn-warning">編集</a>
+                <a href="{% url 'user_delete' user.id %}" class="btn btn-danger">削除</a>
+                <a href="{% url 'user_list' %}" class="btn btn-secondary">一覧に戻る</a>
+            </div>
+        </div>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message message-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="user-detail-card">
+            <div class="jersey-display">
+                <div class="jersey-number">{{ user.jersey_number }}</div>
+                <div class="position-badge position-{{ user.position }}">{{ user.get_position_display }}</div>
+            </div>
+            
+            <div class="user-info">
+                <div class="info-group">
+                    <label>名前</label>
+                    <div class="value">{{ user.name }}</div>
+                </div>
+                
+                <div class="info-group">
+                    <label>年齢</label>
+                    <div class="value">{{ user.age }}歳</div>
+                </div>
+                
+                <div class="info-group">
+                    <label>ポジション</label>
+                    <div class="value">{{ user.get_position_display }}</div>
+                </div>
+                
+                <div class="info-group">
+                    <label>背番号</label>
+                    <div class="value">#{{ user.jersey_number }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

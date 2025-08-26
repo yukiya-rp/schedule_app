@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="ja">
+    <meta name="language" content="ja">
+    <meta name="google" content="notranslate">
+    <title>新規ユーザー登録 - 活動スケジュール</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/css/user_form.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-header">
+            <h1>新規ユーザー登録</h1>
+            <a href="{% url 'user_list' %}" class="back-link">← ユーザー一覧に戻る</a>
+        </div>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message message-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="form-container">
+            <form method="post" class="user-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                    <div class="error-message">{{ form.name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.age.id_for_label }}">{{ form.age.label }}</label>
+                        {{ form.age }}
+                        {% if form.age.errors %}
+                        <div class="error-message">{{ form.age.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.jersey_number.id_for_label }}">{{ form.jersey_number.label }}</label>
+                        {{ form.jersey_number }}
+                        {% if form.jersey_number.errors %}
+                        <div class="error-message">{{ form.jersey_number.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.position.id_for_label }}">{{ form.position.label }}</label>
+                    {{ form.position }}
+                    {% if form.position.errors %}
+                    <div class="error-message">{{ form.position.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">ユーザーを登録</button>
+                    <a href="{% url 'user_list' %}" class="btn btn-secondary">キャンセル</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 年齢と背番号の入力値チェック
+        document.addEventListener('DOMContentLoaded', function() {
+            const ageInput = document.getElementById('{{ form.age.id_for_label }}');
+            const jerseyInput = document.getElementById('{{ form.jersey_number.id_for_label }}');
+            
+            ageInput.addEventListener('input', function() {
+                if (this.value < 1 || this.value > 100) {
+                    this.setCustomValidity('年齢は1歳から100歳の間で入力してください');
+                } else {
+                    this.setCustomValidity('');
+                }
+            });
+            
+            jerseyInput.addEventListener('input', function() {
+                if (this.value < 1 || this.value > 99) {
+                    this.setCustomValidity('背番号は1番から99番の間で入力してください');
+                } else {
+                    this.setCustomValidity('');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

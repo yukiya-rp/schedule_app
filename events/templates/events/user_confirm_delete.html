@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="ja">
+    <meta name="language" content="ja">
+    <meta name="google" content="notranslate">
+    <title>{{ user.name }} - 削除確認</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/css/user_confirm_delete.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="confirm-header">
+            <h1>ユーザー削除の確認</h1>
+        </div>
+
+        <div class="confirm-content">
+            <div class="warning-icon">⚠️</div>
+            <div class="confirm-message">
+                <h2>本当に削除しますか？</h2>
+                <p>以下のユーザーを削除しようとしています。この操作は取り消すことができません。</p>
+            </div>
+
+            <div class="user-preview">
+                <div class="jersey-display">
+                    <div class="jersey-number">{{ user.jersey_number }}</div>
+                </div>
+                <div class="user-info">
+                    <div class="user-name">{{ user.name }}</div>
+                    <div class="user-details">
+                        <span>{{ user.age }}歳</span>
+                        <span>{{ user.get_position_display }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="confirm-actions">
+                <form method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">削除する</button>
+                </form>
+                <a href="{% url 'user_detail' user.id %}" class="btn btn-secondary">キャンセル</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

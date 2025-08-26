@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="ja">
+    <meta name="language" content="ja">
+    <meta name="google" content="notranslate">
+    <title>ユーザー一覧 - 活動スケジュール</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/css/user_list.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ユーザー一覧</h1>
+            <div class="header-actions">
+                <a href="{% url 'user_create' %}" class="btn btn-primary">新規ユーザー登録</a>
+                <a href="{% url 'event_list' %}" class="btn btn-secondary">カレンダーに戻る</a>
+            </div>
+        </div>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message message-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="user-grid">
+            {% for user in users %}
+            <div class="user-card">
+                <div class="user-jersey">{{ user.jersey_number }}</div>
+                <div class="user-info">
+                    <h3 class="user-name">{{ user.name }}</h3>
+                    <div class="user-details">
+                        <div class="user-detail">
+                            <span class="label">年齢:</span>
+                            <span class="value">{{ user.age }}歳</span>
+                        </div>
+                        <div class="user-detail">
+                            <span class="label">ポジション:</span>
+                            <span class="value">{{ user.get_position_display }}</span>
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        <a href="{% url 'user_detail' user.id %}" class="btn btn-sm btn-info">詳細</a>
+                        <a href="{% url 'user_edit' user.id %}" class="btn btn-sm btn-warning">編集</a>
+                        <a href="{% url 'user_delete' user.id %}" class="btn btn-sm btn-danger">削除</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <p>まだユーザーが登録されていません。</p>
+                <a href="{% url 'user_create' %}" class="btn btn-primary">最初のユーザーを登録</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>
