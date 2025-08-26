@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!-- prettier-ignore-start -->
+<!-- eslint-disable -->
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Language" content="ja" />
+    <meta name="language" content="ja" />
+    <meta name="google" content="notranslate" />
+    <title>イベント削除確認 - 活動スケジュール</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      href="{% static 'events/css/event_confirm_delete.css' %}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="delete-header">
+        <h1>イベント削除確認</h1>
+        <a href="{% url 'event_detail' event.id %}" class="back-link"
+          >← イベント詳細に戻る</a
+        >
+      </div>
+
+      <div class="delete-container">
+        <div class="warning-card">
+          <div class="warning-icon">⚠️</div>
+          <h2>削除の確認</h2>
+          <p class="warning-text">
+            以下のイベントを削除しようとしています。この操作は取り消すことができません。
+          </p>
+
+          <div class="event-summary">
+            <div class="event-title">{{ event.title }}</div>
+            <div class="event-details">
+              <div class="detail-item">
+                <span class="label">日時:</span>
+                                 <span class="value">
+                   {{ event.start_time|date:"Y年m月d日 H:i" }} - {{ event.end_time|date:"H:i" }}
+                 </span>
+              </div>
+              {% if event.location %}
+              <div class="detail-item">
+                <span class="label">場所:</span>
+                <span class="value">{{ event.location }}</span>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="delete-actions">
+            <form method="post" class="delete-form">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">削除を実行</button>
+              <a
+                href="{% url 'event_detail' event.id %}"
+                class="btn btn-secondary"
+                >キャンセル</a
+              >
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<!-- prettier-ignore-end -->

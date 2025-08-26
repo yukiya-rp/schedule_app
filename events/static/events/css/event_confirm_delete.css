@@ -1,0 +1,230 @@
+/* イベント削除確認ページのスタイル */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* ヘッダー部分 */
+.delete-header {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.delete-header h1 {
+    margin: 0 0 15px 0;
+    font-size: 2.2em;
+    font-weight: 300;
+}
+
+.back-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* 削除コンテナ */
+.delete-container {
+    padding: 30px;
+}
+
+.warning-card {
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+/* 警告アイコン */
+.warning-icon {
+    font-size: 4em;
+    margin: 20px 0;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.warning-card h2 {
+    color: #e74c3c;
+    margin: 0 0 20px 0;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.warning-text {
+    color: #666;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+/* イベント概要 */
+.event-summary {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #e9ecef;
+}
+
+.event-title {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.event-details {
+    text-align: left;
+}
+
+.detail-item {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.detail-item:last-child {
+    margin-bottom: 0;
+}
+
+.label {
+    width: 60px;
+    font-weight: 600;
+    color: #666;
+    font-size: 0.9em;
+    flex-shrink: 0;
+}
+
+.value {
+    flex: 1;
+    color: #333;
+    font-size: 0.9em;
+}
+
+/* 削除アクション */
+.delete-actions {
+    margin-top: 30px;
+}
+
+.delete-form {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    min-width: 140px;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: white;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(108, 117, 125, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .delete-header {
+        padding: 20px;
+    }
+
+    .delete-header h1 {
+        font-size: 1.8em;
+    }
+
+    .delete-container {
+        padding: 20px;
+    }
+
+    .delete-form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .delete-header h1 {
+        font-size: 1.5em;
+    }
+
+    .warning-icon {
+        font-size: 3em;
+    }
+}

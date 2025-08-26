@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="ja">
+    <meta name="language" content="ja">
+    <meta name="google" content="notranslate">
+    <title>イベント追加 - 活動スケジュール</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/css/event_form.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-header">
+            <h1>新しいイベントを追加</h1>
+            {% if request.GET.date %}
+            <div class="selected-date">
+                選択された日付: {{ request.GET.date|slice:":10" }}
+            </div>
+            {% endif %}
+            <a href="{% url 'event_list' %}" class="back-link">← カレンダーに戻る</a>
+        </div>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message message-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="form-container">
+            <form method="post" class="event-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                    <div class="error-message">{{ form.title.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.location.id_for_label }}">{{ form.location.label }}</label>
+                    {{ form.location }}
+                    {% if form.location.errors %}
+                    <div class="error-message">{{ form.location.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.start_time.id_for_label }}">{{ form.start_time.label }}</label>
+                        {{ form.start_time }}
+                        {% if form.start_time.errors %}
+                        <div class="error-message">{{ form.start_time.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.end_time.id_for_label }}">{{ form.end_time.label }}</label>
+                        {{ form.end_time }}
+                        {% if form.end_time.errors %}
+                        <div class="error-message">{{ form.end_time.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                    <div class="error-message">{{ form.description.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">イベントを追加</button>
+                    <a href="{% url 'event_list' %}" class="btn btn-secondary">キャンセル</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 開始日時が変更されたら、終了日時の最小値を設定
+        document.getElementById('{{ form.start_time.id_for_label }}').addEventListener('change', function () {
+            const startTime = this.value;
+            const endTimeInput = document.getElementById('{{ form.end_time.id_for_label }}');
+            if (startTime) {
+                endTimeInput.min = startTime;
+            }
+        });
+
+        // 日時をデフォルト値として設定
+        window.addEventListener('load', function () {
+            // URLパラメータから日付を取得
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedDate = urlParams.get('date');
+
+            if (selectedDate) {
+                // 選択された日付がある場合は、その日付を使用
+                document.getElementById('{{ form.start_time.id_for_label }}').value = selectedDate;
+
+                // 終了日時は開始日時から1時間後
+                const startDateTime = new Date(selectedDate);
+                const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000);
+                const endYear = endDateTime.getFullYear();
+                const endMonth = String(endDateTime.getMonth() + 1).padStart(2, '0');
+                const endDay = String(endDateTime.getDate()).padStart(2, '0');
+                const endHours = String(endDateTime.getHours()).padStart(2, '0');
+                const endMinutes = String(endDateTime.getMinutes()).padStart(2, '0');
+
+                document.getElementById('{{ form.end_time.id_for_label }}').value = `${endYear}-${endMonth}-${endDay}T${endHours}:${endMinutes}`;
+            } else {
+                // 選択された日付がない場合は、現在の日時を使用
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+
+                const currentDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+                document.getElementById('{{ form.start_time.id_for_label }}').value = currentDateTime;
+
+                // 終了日時は開始日時から1時間後
+                const endDateTime = new Date(now.getTime() + 60 * 60 * 1000);
+                const endYear = endDateTime.getFullYear();
+                const endMonth = String(endDateTime.getMonth() + 1).padStart(2, '0');
+                const endDay = String(endDateTime.getDate()).padStart(2, '0');
+                const endHours = String(endDateTime.getHours()).padStart(2, '0');
+                const endMinutes = String(endDateTime.getMinutes()).padStart(2, '0');
+
+                document.getElementById('{{ form.end_time.id_for_label }}').value = `${endYear}-${endMonth}-${endDay}T${endHours}:${endMinutes}`;
+            }
+        });
+    </script>
+</body>
+
+</html>

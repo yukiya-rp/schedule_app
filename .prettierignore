@@ -1,0 +1,13 @@
+# Djangoテンプレートファイル
+events/templates/**/*.html
+**/*.html
+
+# Pythonファイル
+*.py
+
+# その他のファイル
+*.md
+*.txt
+*.json
+*.yml
+*.yaml

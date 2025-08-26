@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!-- prettier-ignore-start -->
+<!-- eslint-disable -->
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Language" content="ja" />
+    <meta name="language" content="ja" />
+    <meta name="google" content="notranslate" />
+    <title>{{ event.title }} - 活動スケジュール</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/css/event_detail.css' %}" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="detail-header">
+        <h1>イベント詳細</h1>
+        <a href="{% url 'event_list' %}" class="back-link"
+          >← カレンダーに戻る</a
+        >
+      </div>
+
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+        <div class="message message-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="event-detail-container">
+        <div class="event-card">
+          <div class="event-header">
+            <h2 class="event-title">{{ event.title }}</h2>
+            <div class="event-status">
+              <span class="status-badge">詳細表示</span>
+            </div>
+          </div>
+
+          <div class="event-info">
+            <div class="info-row">
+              <div class="info-label">場所</div>
+              <div class="info-value">
+                {% if event.location %}
+                  {{ event.location }}
+                {% else %}
+                  <span class="no-info">場所未設定</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="info-row">
+              <div class="info-label">開始日時</div>
+              <div class="info-value">
+                {{ event.start_time|date:"Y年m月d日 H:i" }}
+              </div>
+            </div>
+
+            <div class="info-row">
+              <div class="info-label">終了日時</div>
+              <div class="info-value">
+                {{ event.end_time|date:"Y年m月d日 H:i" }}
+              </div>
+            </div>
+
+            <div class="info-row">
+              <div class="info-label">詳細</div>
+              <div class="info-value">
+                {% if event.description %}
+                  {{ event.description|linebreaks }}
+                {% else %}
+                  <span class="no-info">詳細未設定</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="event-actions">
+            <a href="{% url 'event_list' %}" class="btn btn-secondary"
+              >カレンダーに戻る</a
+            >
+            <a href="{% url 'event_delete' event.id %}" class="btn btn-danger"
+              >イベントを削除</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<!-- prettier-ignore-end -->
