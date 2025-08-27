@@ -51,7 +51,20 @@ def event_detail(request, event_id):
         messages.error(request, '指定されたイベントが見つかりません。')
         return redirect('event_list')
 
-def event_delete(request, event_id):
+def event_edit(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'イベント「{event.title}」が更新されました。')
+            return redirect('event_detail', event_id=event.id)
+    else:
+        form = EventForm(instance=event)
+    
+    return render(request, 'events/event_edit.html', {'form': form, 'event': event})
+
+def event_confirm_delete(request, event_id):
     try:
         event = Event.objects.get(id=event_id)
         if request.method == 'POST':
@@ -99,7 +112,7 @@ def user_edit(request, user_id):
     
     return render(request, 'events/user_edit.html', {'form': form, 'user': user})
 
-def user_delete(request, user_id):
+def user_confirm_delete(request, user_id):
     user = get_object_or_404(User, id=user_id)
     if request.method == 'POST':
         user_name = user.name

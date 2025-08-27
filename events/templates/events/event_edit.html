@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}新規イベント作成 - 活動スケジュール{% endblock %}
+{% block title %}{{ event.title }} - イベント編集{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'events/css/event_form.css' %}">
@@ -10,8 +10,8 @@
 {% block content %}
 <div class="container">
     <div class="form-header">
-        <h1>新規イベント作成</h1>
-        <a href="{% url 'event_list' %}" class="back-link">← カレンダーに戻る</a>
+        <h1>{{ event.title }}の編集</h1>
+        <a href="{% url 'event_detail' event.id %}" class="back-link">← イベント詳細に戻る</a>
     </div>
 
     {% if messages %}
@@ -71,8 +71,8 @@
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">イベントを作成</button>
-                <a href="{% url 'event_list' %}" class="btn btn-secondary">キャンセル</a>
+                <button type="submit" class="btn btn-primary">変更を保存</button>
+                <a href="{% url 'event_detail' event.id %}" class="btn btn-secondary">キャンセル</a>
             </div>
         </form>
     </div>
