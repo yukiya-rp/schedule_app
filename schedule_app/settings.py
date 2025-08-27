@@ -79,8 +79,8 @@ DATABASES = {
         "NAME": "schedule_db",
         "USER": "postgres",
         "PASSWORD": "postgres",
-        "HOST": "db",   # docker-compose のサービス名
-        "PORT": "5432",
+        "HOST": "db",   # Docker Composeのサービス名
+        "PORT": "5432", # PostgreSQLのデフォルトポート
     }
 }
 

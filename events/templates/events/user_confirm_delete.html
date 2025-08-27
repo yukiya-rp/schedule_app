@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="ja">
+    <meta name="language" content="ja">
+    <meta name="google" content="notranslate">
+    <title>{{ user.name }} - ユーザー削除確認</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'events/css/user_confirm_delete.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ユーザー削除確認</h1>
+            <div class="header-actions">
+                <a href="{% url 'user_detail' user.id %}" class="btn btn-secondary">詳細に戻る</a>
+                <a href="{% url 'user_list' %}" class="btn btn-secondary">一覧に戻る</a>
+            </div>
+        </div>
+
+        <div class="delete-confirmation">
+            <div class="warning-icon">⚠️</div>
+            <h2>本当に削除しますか？</h2>
+            <p class="warning-text">
+                ユーザー「<strong>{{ user.name }}</strong>」を削除すると、この操作は取り消すことができません。
+            </p>
+            
+            <div class="user-info-card">
+                <div class="jersey-number">#{{ user.jersey_number }}</div>
+                <div class="user-details">
+                    <div class="detail-item">
+                        <span class="label">名前:</span>
+                        <span class="value">{{ user.name }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">年齢:</span>
+                        <span class="value">{{ user.age }}歳</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">ポジション:</span>
+                        <span class="value">{{ user.get_positions_display }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <form method="post" class="delete-form">
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-danger">削除する</button>
+                    <a href="{% url 'user_detail' user.id %}" class="btn btn-secondary">キャンセル</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

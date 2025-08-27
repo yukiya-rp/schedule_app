@@ -1,0 +1,293 @@
+/* フォーム全体のスタイル */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* ヘッダー部分 */
+.form-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.form-header h1 {
+    margin: 0 0 15px 0;
+    font-size: 2.2em;
+    font-weight: 300;
+}
+
+.back-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* メッセージ表示 */
+.messages {
+    margin: 0;
+}
+
+.message {
+    padding: 15px 30px;
+    margin: 0;
+    font-weight: 500;
+}
+
+.message-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.message-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.message-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-left: 4px solid #ffc107;
+}
+
+.message-info {
+    background-color: #cce7ff;
+    color: #004085;
+    border-left: 4px solid #007bff;
+}
+
+/* フォームコンテナ */
+.form-container {
+    padding: 40px;
+}
+
+.user-form {
+    max-width: 100%;
+}
+
+/* フォーム要素 */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
+}
+
+/* フォーム行（2つの要素を横並びにする） */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* ポジション選択のチェックボックス */
+.position-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.position-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: #333;
+}
+
+.position-checkbox:hover {
+    background: #e9ecef;
+    border-color: #667eea;
+}
+
+.position-checkbox input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.position-checkbox input[type="checkbox"]:checked + .position-label {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.position-label {
+    cursor: pointer;
+    margin: 0;
+    flex: 1;
+}
+
+/* エラーメッセージ */
+.error-message {
+    color: #dc3545;
+    font-size: 0.9em;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+/* ボタンエリア */
+.form-actions {
+    margin-top: 40px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    min-width: 120px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .container {
+        margin: 0 10px;
+        border-radius: 10px;
+    }
+    
+    .form-header {
+        padding: 20px;
+    }
+    
+    .form-header h1 {
+        font-size: 1.8em;
+    }
+    
+    .form-container {
+        padding: 20px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .position-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 10px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* プレースホルダーのスタイル */
+::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+/* 数値入力のスピンボタンを隠す（Chrome, Safari, Edge） */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* 数値入力のスピンボタンを隠す（Firefox） */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* バリデーション用スタイル */
+.form-group input:invalid {
+    border-color: #dc3545;
+}
+
+.form-group input:valid {
+    border-color: #28a745;
+}

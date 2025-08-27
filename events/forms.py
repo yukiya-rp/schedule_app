@@ -1,5 +1,5 @@
 from django import forms
-from .models import Event
+from .models import Event, User, Position
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -34,4 +34,36 @@ class EventForm(forms.ModelForm):
             'start_time': '開始日時',
             'end_time': '終了日時',
             'description': '詳細'
+        }
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['name', 'age', 'positions', 'jersey_number']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '名前を入力してください'
+            }),
+            'age': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': 1,
+                'max': 100,
+                'placeholder': '年齢を入力してください'
+            }),
+            'positions': forms.CheckboxSelectMultiple(attrs={
+                'class': 'position-checkboxes'
+            }),
+            'jersey_number': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': 1,
+                'max': 99,
+                'placeholder': '背番号を入力してください'
+            })
+        }
+        labels = {
+            'name': '名前',
+            'age': '年齢',
+            'positions': 'ポジション',
+            'jersey_number': '背番号'
         }
