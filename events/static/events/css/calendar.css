@@ -1,9 +1,4 @@
 /* カレンダー全体のスタイル */
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f5f5f5;
-}
 
 .calendar-container {
     max-width: 1200px;
@@ -21,8 +16,17 @@ body {
 
 .calendar-header h1 {
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
+
+.header-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+
 
 .month-navigation {
     display: flex;

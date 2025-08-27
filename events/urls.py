@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     # イベント関連のURL
     path('', views.event_list, name='event_list'),
+    path('list/', views.event_list_view, name='event_list_view'),
     path('create/', views.event_create, name='event_create'),
     path('<int:event_id>/', views.event_detail, name='event_detail'),
     path('<int:event_id>/edit/', views.event_edit, name='event_edit'),

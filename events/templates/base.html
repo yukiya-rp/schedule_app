@@ -25,7 +25,12 @@
                 <ul class="nav-list">
                     <li class="nav-item">
                         <a href="{% url 'event_list' %}" class="nav-link {% if request.resolver_match.url_name == 'event_list' %}active{% endif %}">
-                            スケジュール
+                            カレンダー
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'event_list_view' %}" class="nav-link {% if request.resolver_match.url_name == 'event_list_view' %}active{% endif %}">
+                            イベント一覧
                         </a>
                     </li>
                     <li class="nav-item">

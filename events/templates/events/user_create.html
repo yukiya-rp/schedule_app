@@ -11,7 +11,7 @@
 <div class="container">
     <div class="form-header">
         <h1>新規ユーザー登録</h1>
-        <a href="{% url 'user_list' %}" class="back-link">← ユーザー一覧に戻る</a>
+        <a href="#" onclick="goBack()" class="back-link">← 戻る</a>
     </div>
 
     {% if messages %}
@@ -73,7 +73,7 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">ユーザーを登録</button>
-                <a href="{% url 'user_list' %}" class="btn btn-secondary">キャンセル</a>
+                <a href="#" onclick="goBack()" class="btn btn-secondary">キャンセル</a>
             </div>
         </form>
     </div>
@@ -103,5 +103,28 @@
             }
         });
     });
+
+    // 戻る機能
+    function goBack() {
+        // 前のページのURLを取得
+        const referrer = document.referrer;
+        
+        // 前のページがない場合や、同じサイトのページでない場合はデフォルトのページに戻る
+        if (!referrer || !referrer.includes(window.location.origin)) {
+            window.location.href = "{% url 'user_list' %}";
+            return;
+        }
+        
+        // 前のページのパスを取得
+        const referrerPath = new URL(referrer).pathname;
+        
+        // 特定のページからの遷移の場合は適切な戻り先を設定
+        if (referrerPath.includes('/users/')) {
+            window.location.href = "{% url 'user_list' %}";
+        } else {
+            // その他の場合は前のページに戻る
+            window.history.back();
+        }
+    }
 </script>
 {% endblock %}

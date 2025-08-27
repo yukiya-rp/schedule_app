@@ -1,4 +1,40 @@
 /* リセットとベーススタイル */
+:root {
+    /* メインカラー */
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --secondary-color: #6c757d;
+    --secondary-hover: #545b62;
+    --success-color: #28a745;
+    --success-hover: #1e7e34;
+    --danger-color: #dc3545;
+    --danger-hover: #c82333;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    
+    /* 背景色 */
+    --bg-primary: #f5f5f5;
+    --bg-secondary: #ffffff;
+    --bg-light: #f8f9fa;
+    --bg-dark: #343a40;
+    
+    /* テキスト色 */
+    --text-primary: #333;
+    --text-secondary: #666;
+    --text-muted: #6c757d;
+    --text-light: #ffffff;
+    --text-dark: #212529;
+    
+    /* 境界線色 */
+    --border-color: #e0e0e0;
+    --border-light: #dee2e6;
+    
+    /* 影 */
+    --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-heavy: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,8 +44,8 @@
 body {
     font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f5f5f5;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
 }
 
 /* ヘッダー */

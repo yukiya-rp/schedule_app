@@ -1,59 +1,48 @@
 /* イベント削除確認ページのスタイル */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-    margin: 0;
-    padding: 20px;
-    min-height: 100vh;
-}
 
 .container {
     max-width: 600px;
     margin: 0 auto;
     background: white;
     border-radius: 15px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    border: 1px solid #e0e0e0;
 }
 
 /* ヘッダー部分 */
 .delete-header {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-    color: white;
-    padding: 30px;
+    background: #f5f5f5;
+    color: #333;
+    padding: 10px;
     text-align: center;
     position: relative;
+    border-bottom: 2px solid #e0e0e0;
 }
 
-.delete-header h1 {
+.delete-header h2 {
     margin: 0 0 15px 0;
     font-size: 2.2em;
     font-weight: 300;
 }
 
 .back-link {
-    color: rgba(255, 255, 255, 0.9);
+    color: #007bff;
     text-decoration: none;
     font-size: 1.1em;
     transition: color 0.3s ease;
 }
 
 .back-link:hover {
-    color: white;
+    color: #0056b3;
     text-decoration: underline;
 }
 
-/* 削除コンテナ */
-.delete-container {
-    padding: 30px;
-}
+/* 削除警告セクション */
+.delete-warning {
 
-.warning-card {
     text-align: center;
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
 }
 
 /* 警告アイコン */
@@ -77,113 +66,74 @@ body {
     }
 }
 
-.warning-card h2 {
-    color: #e74c3c;
-    margin: 0 0 20px 0;
+.delete-warning h3 {
+    color: #dc3545;
+    margin: 0 0 10px 0;
     font-size: 1.8em;
     font-weight: 600;
 }
 
-.warning-text {
+.delete-warning p {
     color: #666;
     font-size: 1.1em;
     line-height: 1.6;
-    margin-bottom: 30px;
-    padding: 0 20px;
+    margin-bottom: 20px;
 }
 
-/* イベント概要 */
-.event-summary {
+/* イベント情報カード */
+.event-info-card {
     background: #f8f9fa;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px 0;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 20px 30px;
     border: 1px solid #e9ecef;
 }
 
-.event-title {
-    font-size: 1.3em;
-    font-weight: 600;
+.event-info-card h3 {
     color: #333;
-    margin-bottom: 15px;
+    margin: 0 0 20px 0;
+    font-size: 1.4em;
+    font-weight: 600;
+    text-align: center;
 }
 
 .event-details {
-    text-align: left;
-}
-
-.detail-item {
     display: flex;
-    margin-bottom: 10px;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.detail-row {
+    display: flex;
     align-items: center;
+    gap: 15px;
 }
 
-.detail-item:last-child {
-    margin-bottom: 0;
-}
-
-.label {
-    width: 60px;
+.detail-label {
     font-weight: 600;
     color: #666;
-    font-size: 0.9em;
-    flex-shrink: 0;
+    min-width: 80px;
 }
 
-.value {
-    flex: 1;
+.detail-value {
     color: #333;
-    font-size: 0.9em;
+    font-weight: 500;
 }
 
 /* 削除アクション */
 .delete-actions {
     margin-top: 30px;
-}
-
-.delete-form {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.btn {
-    padding: 15px 30px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
+    padding: 0 30px 30px;
     text-align: center;
-    min-width: 140px;
 }
 
-.btn-danger {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-    color: white;
+.delete-actions form {
+    display: inline;
 }
 
-.btn-danger:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
-}
 
-.btn-secondary {
-    background: #6c757d;
-    color: white;
-}
 
-.btn-secondary:hover {
-    background: #5a6268;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(108, 117, 125, 0.3);
-    color: white;
-    text-decoration: none;
-}
+
 
 /* レスポンシブデザイン */
 @media (max-width: 768px) {
@@ -200,31 +150,37 @@ body {
         font-size: 1.8em;
     }
 
-    .delete-container {
+    .delete-warning {
         padding: 20px;
     }
 
-    .delete-form {
-        flex-direction: column;
-        align-items: center;
+    .event-info-card {
+        margin: 20px 15px;
+        padding: 20px;
+    }
+
+    .delete-actions {
+        padding: 0 15px 20px;
     }
 
     .btn {
         width: 100%;
         max-width: 300px;
+        margin: 10px 0;
     }
 }
 
 @media (max-width: 480px) {
-    body {
-        padding: 10px;
-    }
-
     .delete-header h1 {
         font-size: 1.5em;
     }
 
     .warning-icon {
         font-size: 3em;
+    }
+
+    .event-info-card {
+        margin: 20px 10px;
+        padding: 15px;
     }
 }

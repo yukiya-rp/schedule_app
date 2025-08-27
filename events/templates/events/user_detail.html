@@ -14,7 +14,7 @@
         <div class="user-actions">
             <a href="{% url 'user_edit' user.id %}" class="btn btn-primary">編集</a>
             <a href="{% url 'user_confirm_delete' user.id %}" class="btn btn-danger">削除</a>
-            <a href="{% url 'user_list' %}" class="btn btn-secondary">ユーザー一覧に戻る</a>
+            <a href="#" onclick="goBack()" class="btn btn-secondary">戻る</a>
         </div>
     </div>
 
@@ -40,4 +40,28 @@
         </div>
     </div>
 </div>
+
+<script>
+function goBack() {
+    // 前のページのURLを取得
+    const referrer = document.referrer;
+    
+    // 前のページがない場合や、同じサイトのページでない場合はデフォルトのページに戻る
+    if (!referrer || !referrer.includes(window.location.origin)) {
+        window.location.href = "{% url 'user_list' %}";
+        return;
+    }
+    
+    // 前のページのパスを取得
+    const referrerPath = new URL(referrer).pathname;
+    
+    // 特定のページからの遷移の場合は適切な戻り先を設定
+    if (referrerPath.includes('/users/')) {
+        window.location.href = "{% url 'user_list' %}";
+    } else {
+        // その他の場合は前のページに戻る
+        window.history.back();
+    }
+}
+</script>
 {% endblock %}

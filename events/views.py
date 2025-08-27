@@ -121,3 +121,8 @@ def user_confirm_delete(request, user_id):
         return redirect('user_list')
     else:
         return render(request, 'events/user_confirm_delete.html', {'user': user})
+
+def event_list_view(request):
+    """イベントをリスト形式で表示するビュー"""
+    events = Event.objects.all().order_by('start_time')
+    return render(request, 'events/event_list_view.html', {'events': events})

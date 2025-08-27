@@ -163,6 +163,7 @@ function renderCalendar() {
             if (dayEvents.length > 0) {
                 // イベントがある場合は詳細表示
                 dayElement.classList.add('has-events');
+                dayElement.classList.add('clickable');
 
                 dayEvents.forEach(event => {
                     const eventElement = document.createElement('div');
@@ -208,6 +209,35 @@ function renderCalendar() {
                     };
                     dayElement.appendChild(eventElement);
                 });
+
+                // イベントがある日のセル全体のクリック処理（余白部分をクリックした時）
+                dayElement.onclick = (e) => {
+                    // イベント要素がクリックされた場合は何もしない（詳細ページに遷移）
+                    if (e.target.closest('.event-item')) {
+                        return;
+                    }
+
+                    // 余白部分がクリックされた場合はイベント追加ページに遷移
+                    // 選択した日付を正しくフォーマット（時刻は9:00に設定）
+                    const year = currentDay.getFullYear();
+                    const month = String(currentDay.getMonth() + 1).padStart(2, '0');
+                    const day = String(currentDay.getDate()).padStart(2, '0');
+
+                    // 時刻は9:00に固定（一般的な営業開始時刻）
+                    const hours = '09';
+                    const minutes = '00';
+
+                    const selectedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+                    // デバッグ用ログ
+                    console.log('Cell background clicked (add new event):', {
+                        original: currentDay,
+                        formatted: selectedDate,
+                        year, month, day, hours, minutes
+                    });
+
+                    window.location.href = `/events/create/?date=${selectedDate}`;
+                };
             } else {
                 // イベントがない場合は追加画面に遷移
                 dayElement.classList.add('clickable');

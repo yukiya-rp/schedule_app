@@ -14,7 +14,7 @@
         <div class="event-actions">
             <a href="{% url 'event_edit' event.id %}" class="btn btn-primary">編集</a>
             <a href="{% url 'event_confirm_delete' event.id %}" class="btn btn-danger">削除</a>
-            <a href="{% url 'event_list' %}" class="btn btn-secondary">カレンダーに戻る</a>
+            <a href="#" onclick="goBack()" class="btn btn-secondary">戻る</a>
         </div>
     </div>
 
@@ -48,4 +48,30 @@
         </div>
     </div>
 </div>
+
+<script>
+function goBack() {
+    // 前のページのURLを取得
+    const referrer = document.referrer;
+    
+    // 前のページがない場合や、同じサイトのページでない場合はデフォルトのページに戻る
+    if (!referrer || !referrer.includes(window.location.origin)) {
+        window.location.href = "{% url 'event_list' %}";
+        return;
+    }
+    
+    // 前のページのパスを取得
+    const referrerPath = new URL(referrer).pathname;
+    
+    // 特定のページからの遷移の場合は適切な戻り先を設定
+    if (referrerPath.includes('/events/list/')) {
+        window.location.href = "{% url 'event_list_view' %}";
+    } else if (referrerPath.includes('/events/')) {
+        window.location.href = "{% url 'event_list' %}";
+    } else {
+        // その他の場合は前のページに戻る
+        window.history.back();
+    }
+}
+</script>
 {% endblock %}
