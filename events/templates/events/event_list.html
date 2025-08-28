@@ -9,6 +9,17 @@
 
 {% block content %}
 <div class="calendar-container">
+  <!-- メッセージ表示エリア -->
+  {% if messages %}
+    <div class="messages-container">
+      {% for message in messages %}
+        <div class="message message-{{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
   <div class="month-navigation">
     <button class="month-nav-btn" id="prevMonthBtn">前月</button>
     <div class="current-month" id="currentMonth">2024年1月</div>
