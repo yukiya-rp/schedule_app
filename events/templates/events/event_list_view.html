@@ -15,45 +15,187 @@
       <a href="{% url 'event_create' %}" class="btn btn-primary">新規イベント作成</a>
     </div>
   </div>
+  
+  <div class="filter-section">
+    <form method="get" class="filter-form">
+      <label class="checkbox-label">
+        <input type="checkbox" name="show_deleted" value="true" 
+               {% if show_deleted %}checked{% endif %} 
+               onchange="this.form.submit()">
+        <span class="checkmark"></span>
+        削除されたイベントも表示
+      </label>
+    </form>
+  </div>
 
-  {% if events %}
-    <div class="event-list">
-      {% for event in events %}
-        <div class="event-item">
-          <div class="event-header">
-            <h3 class="event-title">
-              <a href="{% url 'event_detail' event.id %}">{{ event.title }}</a>
-            </h3>
-          </div>
-          
-          <div class="event-details">
-            <div class="event-time">
-              <span class="time-label">時間:</span>
-              <span class="time-value">{{ event.start_time|date:"Y年n月j日 H:i" }} - {{ event.end_time|date:"H:i" }}</span>
+  <!-- タブナビゲーション -->
+  <div class="tab-navigation">
+    <button class="tab-button active" data-tab="today">本日のイベント</button>
+    <button class="tab-button" data-tab="upcoming">今後のイベント</button>
+    <button class="tab-button" data-tab="past">過去のイベント</button>
+  </div>
+
+  <!-- 本日のイベントタブ -->
+  <div class="tab-content active" id="today-tab">
+    {% if today_events %}
+      <div class="event-list">
+        {% for event in today_events %}
+          <div class="event-item {% if event.is_deleted %}deleted-event{% endif %} today-event">
+            <div class="event-header">
+              <h3 class="event-title">
+                <a href="{% url 'event_detail' event.id %}">{{ event.title }}</a>
+                {% if event.is_deleted %}
+                  <span class="deleted-badge">削除済み</span>
+                {% endif %}
+                <span class="today-badge">本日</span>
+              </h3>
             </div>
             
-            {% if event.location %}
-              <div class="event-location">
-                <span class="location-label">場所:</span>
-                <span class="location-value">{{ event.location }}</span>
+            <div class="event-details">
+              <div class="event-time">
+                <span class="time-label">時間:</span>
+                <span class="time-value">{{ event.start_time|date:"H:i" }} - {{ event.end_time|date:"H:i" }}</span>
               </div>
-            {% endif %}
-            
-            {% if event.description %}
-              <div class="event-description">
-                <span class="description-label">詳細:</span>
-                <span class="description-value">{{ event.description|truncatewords:30 }}</span>
-              </div>
-            {% endif %}
+              
+              {% if event.location %}
+                <div class="event-location">
+                  <span class="location-label">場所:</span>
+                  <span class="location-value">{{ event.location }}</span>
+                </div>
+              {% endif %}
+              
+              {% if event.description %}
+                <div class="event-description">
+                  <span class="description-label">詳細:</span>
+                  <span class="description-value">{{ event.description|truncatewords:30 }}</span>
+                </div>
+              {% endif %}
+            </div>
           </div>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="no-events">
-      <p>まだイベントが登録されていません。</p>
-      <a href="{% url 'event_create' %}" class="btn btn-primary">最初のイベントを作成</a>
-    </div>
-  {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="no-events">
+        <p>本日のイベントはありません。</p>
+        <a href="{% url 'event_create' %}" class="btn btn-primary">新しいイベントを作成</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- 今後のイベントタブ -->
+  <div class="tab-content" id="upcoming-tab">
+    {% if upcoming_events %}
+      <div class="event-list">
+        {% for event in upcoming_events %}
+          <div class="event-item {% if event.is_deleted %}deleted-event{% endif %}">
+            <div class="event-header">
+              <h3 class="event-title">
+                <a href="{% url 'event_detail' event.id %}">{{ event.title }}</a>
+                {% if event.is_deleted %}
+                  <span class="deleted-badge">削除済み</span>
+                {% endif %}
+              </h3>
+            </div>
+            
+            <div class="event-details">
+              <div class="event-time">
+                <span class="time-label">時間:</span>
+                <span class="time-value">{{ event.start_time|date:"Y年n月j日 H:i" }} - {{ event.end_time|date:"H:i" }}</span>
+              </div>
+              
+              {% if event.location %}
+                <div class="event-location">
+                  <span class="location-label">場所:</span>
+                  <span class="location-value">{{ event.location }}</span>
+                </div>
+              {% endif %}
+              
+              {% if event.description %}
+                <div class="event-description">
+                  <span class="description-label">詳細:</span>
+                  <span class="description-value">{{ event.description|truncatewords:30 }}</span>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="no-events">
+        <p>今後のイベントはありません。</p>
+        <a href="{% url 'event_create' %}" class="btn btn-primary">新しいイベントを作成</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- 過去のイベントタブ -->
+  <div class="tab-content" id="past-tab">
+    {% if past_events %}
+      <div class="event-list">
+        {% for event in past_events %}
+          <div class="event-item {% if event.is_deleted %}deleted-event{% endif %}">
+            <div class="event-header">
+              <h3 class="event-title">
+                <a href="{% url 'event_detail' event.id %}">{{ event.title }}</a>
+                {% if event.is_deleted %}
+                  <span class="deleted-badge">削除済み</span>
+                {% endif %}
+              </h3>
+            </div>
+            
+            <div class="event-details">
+              <div class="event-time">
+                <span class="time-label">時間:</span>
+                <span class="time-value">{{ event.start_time|date:"Y年n月j日 H:i" }} - {{ event.end_time|date:"H:i" }}</span>
+              </div>
+              
+              {% if event.location %}
+                <div class="event-location">
+                  <span class="location-label">場所:</span>
+                  <span class="location-value">{{ event.location }}</span>
+                </div>
+              {% endif %}
+              
+              {% if event.description %}
+                <div class="event-description">
+                  <span class="description-label">詳細:</span>
+                  <span class="description-value">{{ event.description|truncatewords:30 }}</span>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="no-events">
+        <p>過去のイベントはありません。</p>
+      </div>
+    {% endif %}
+  </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-tab');
+            
+            // すべてのタブボタンからactiveクラスを削除
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            // すべてのタブコンテンツからactiveクラスを削除
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // クリックされたタブボタンにactiveクラスを追加
+            this.classList.add('active');
+            // 対応するタブコンテンツにactiveクラスを追加
+            document.getElementById(targetTab + '-tab').classList.add('active');
+        });
+    });
+});
+</script>
 {% endblock %}

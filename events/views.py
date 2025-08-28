@@ -4,8 +4,15 @@ from .models import Event, User
 from .forms import EventForm, UserForm
 
 def event_list(request):
-    events = Event.objects.all().order_by('start_time')
-    return render(request, 'events/event_list.html', {'events': events})
+    show_deleted = request.GET.get('show_deleted', 'false') == 'true'
+    if show_deleted:
+        events = Event.objects.all().order_by('start_time')
+    else:
+        events = Event.objects.filter(is_deleted=False).order_by('start_time')
+    return render(request, 'events/event_list.html', {
+        'events': events,
+        'show_deleted': show_deleted
+    })
 
 def event_create(request):
     if request.method == 'POST':
@@ -45,14 +52,14 @@ def event_create(request):
 
 def event_detail(request, event_id):
     try:
-        event = Event.objects.get(id=event_id)
+        event = Event.objects.get(id=event_id, is_deleted=False)
         return render(request, 'events/event_detail.html', {'event': event})
     except Event.DoesNotExist:
         messages.error(request, '指定されたイベントが見つかりません。')
         return redirect('event_list')
 
 def event_edit(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
+    event = get_object_or_404(Event, id=event_id, is_deleted=False)
     if request.method == 'POST':
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
@@ -66,10 +73,10 @@ def event_edit(request, event_id):
 
 def event_confirm_delete(request, event_id):
     try:
-        event = Event.objects.get(id=event_id)
+        event = Event.objects.get(id=event_id, is_deleted=False)
         if request.method == 'POST':
             event_title = event.title
-            event.delete()
+            event.soft_delete()  # 論理削除を実行
             messages.success(request, f'イベント「{event_title}」が削除されました。')
             return redirect('event_list')
         else:
@@ -124,5 +131,43 @@ def user_confirm_delete(request, user_id):
 
 def event_list_view(request):
     """イベントをリスト形式で表示するビュー"""
-    events = Event.objects.all().order_by('start_time')
-    return render(request, 'events/event_list_view.html', {'events': events})
+    from django.utils import timezone
+    from datetime import datetime, time
+    
+    show_deleted = request.GET.get('show_deleted', 'false') == 'true'
+    current_time = timezone.now()
+    
+    # 今日の日付を取得
+    today = current_time.date()
+    
+    # 本日のイベント（今日の日付のイベント）
+    if show_deleted:
+        today_events = Event.objects.filter(
+            start_time__date=today
+        ).order_by('start_time')
+        upcoming_events = Event.objects.filter(
+            start_time__date__gt=today
+        ).order_by('start_time')
+        past_events = Event.objects.filter(
+            start_time__date__lt=today
+        ).order_by('-start_time')
+    else:
+        today_events = Event.objects.filter(
+            start_time__date=today,
+            is_deleted=False
+        ).order_by('start_time')
+        upcoming_events = Event.objects.filter(
+            start_time__date__gt=today,
+            is_deleted=False
+        ).order_by('start_time')
+        past_events = Event.objects.filter(
+            start_time__date__lt=today,
+            is_deleted=False
+        ).order_by('-start_time')
+    
+    return render(request, 'events/event_list_view.html', {
+        'today_events': today_events,
+        'upcoming_events': upcoming_events,
+        'past_events': past_events,
+        'show_deleted': show_deleted
+    })

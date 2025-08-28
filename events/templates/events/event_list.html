@@ -15,6 +15,18 @@
     <button class="month-nav-btn" id="nextMonthBtn">次月</button>
   </div>
 
+  <div class="filter-section">
+    <form method="get" class="filter-form">
+      <label class="checkbox-label">
+        <input type="checkbox" name="show_deleted" value="true" 
+               {% if show_deleted %}checked{% endif %} 
+               onchange="this.form.submit()">
+        <span class="checkmark"></span>
+        削除されたイベントも表示
+      </label>
+    </form>
+  </div>
+
   <div class="calendar-grid">
     <div class="calendar-day-header">日</div>
     <div class="calendar-day-header">月</div>
