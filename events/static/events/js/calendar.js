@@ -1,6 +1,22 @@
 // カレンダー用のJavaScript
 let currentDate = new Date();
 
+// イベント名を適切に改行する関数（CSSで制御するため、ここでは改行文字を挿入）
+function formatEventTitle(title) {
+    // 長いイベント名の場合は適切な位置で改行を促す
+    if (title.length > 20) {
+        // 20文字を超える場合は、適切な位置で改行を促す
+        const words = title.split(' ');
+        if (words.length > 1) {
+            const midPoint = Math.ceil(words.length / 2);
+            const firstHalf = words.slice(0, midPoint).join(' ');
+            const secondHalf = words.slice(midPoint).join(' ');
+            return firstHalf + ' ' + secondHalf;
+        }
+    }
+    return title;
+}
+
 // 祝日名を取得する関数
 function getHolidayName(date) {
     const year = date.getFullYear();
@@ -170,10 +186,11 @@ function renderCalendar() {
                     eventElement.className = 'event-item';
                     eventElement.title = `${event.title} - ${event.location}`;
 
-                    // タイトル
+                    // タイトル（2行まで表示、CSSで制御）
                     const eventTitle = document.createElement('div');
                     eventTitle.className = 'event-title';
-                    eventTitle.textContent = event.title;
+                    eventTitle.textContent = formatEventTitle(event.title);
+                    eventTitle.title = event.title; // フルタイトルをツールチップに表示
                     eventElement.appendChild(eventTitle);
 
                     // 場所
@@ -301,6 +318,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (nextMonthBtn) {
         nextMonthBtn.addEventListener('click', nextMonth);
     }
+
+    // ウィンドウリサイズ時の処理
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            renderCalendar();
+        }, 100); // 100ms後に再描画
+    });
 
     // 初期表示
     renderCalendar();

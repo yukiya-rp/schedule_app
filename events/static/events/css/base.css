@@ -88,8 +88,8 @@ body {
     color: white;
 }
 
-/* ナビゲーション */
-.header-nav {
+/* デスクトップナビゲーション */
+.desktop-nav {
     display: flex;
     align-items: center;
 }
@@ -124,6 +124,94 @@ body {
     color: #4CAF50;
     border-bottom-color: #4CAF50;
     background-color: #f8f9fa;
+}
+
+/* ハンバーガーメニューボタン */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.hamburger-line {
+    width: 25px;
+    height: 3px;
+    background: #666;
+    margin: 2px 0;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* モバイルナビゲーション */
+.mobile-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-top: 1px solid #e0e0e0;
+    z-index: 1000;
+}
+
+.mobile-nav.active {
+    display: block;
+}
+
+.mobile-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-nav-item {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.mobile-nav-item:last-child {
+    border-bottom: none;
+}
+
+.mobile-nav-link {
+    display: block;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 1rem 1.5rem;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.mobile-nav-link:hover {
+    background: #f8f9fa;
+    color: #4CAF50;
+}
+
+.mobile-nav-link.active {
+    background: #f8f9fa;
+    color: #4CAF50;
+    border-left-color: #4CAF50;
 }
 
 /* メインコンテンツ */
@@ -235,9 +323,14 @@ body {
         font-size: 20px;
     }
     
-    .nav-link {
-        padding: 12px 18px;
-        font-size: 14px;
+    /* デスクトップナビゲーションを非表示 */
+    .desktop-nav {
+        display: none;
+    }
+    
+    /* ハンバーガーメニューを表示 */
+    .hamburger-menu {
+        display: flex;
     }
     
     .main-content {
@@ -252,29 +345,32 @@ body {
 
 @media (max-width: 480px) {
     .header-container {
-        flex-direction: column;
-        height: auto;
-        padding: 15px;
+        padding: 0 10px;
+        height: 50px;
     }
     
-    .header-left {
-        margin-bottom: 15px;
+    .header-icon {
+        width: 35px;
+        height: 35px;
+        margin-right: 10px;
     }
     
-    .nav-list {
-        flex-direction: column;
-        width: 100%;
+    .icon-placeholder {
+        font-size: 18px;
     }
     
-    .nav-link {
-        text-align: center;
-        border-bottom: none;
-        border-left: 3px solid transparent;
+    .hamburger-menu {
+        width: 35px;
+        height: 35px;
     }
     
-    .nav-link.active {
-        border-left-color: #4CAF50;
-        border-bottom-color: transparent;
+    .hamburger-line {
+        width: 20px;
+        height: 2px;
+    }
+    
+    .main-content {
+        padding: 10px;
     }
     
     .btn {
